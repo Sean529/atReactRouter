@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #root {
+        border: 1px solid red;
+        height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <ul>
+      <li><a onclick="pushA()">/a</a></li>
+      <li><a onclick="pushB()">/b</a></li>
+      <li><a onclick="replaceState()">/replaceState</a></li>
+      <li><a onclick="forward()">/forward</a></li>
+      <li><a onclick="back()">/back</a></li>
+      <li><a onclick="go(-1)">/go</a></li>
+    </ul>
+    <script>
+      const history = window.history
+      ;(function (history) {
+        const oldPushState = history.pushState
+        history.pushState = function (state, title, pathname) {
+          const result = oldPushState.apply(history, arguments)
+          if (typeof window.onpushstate === "function") {
+            window.onpushstate(new CustomEvent("pushstate", { detail: { pathname, state } }))
+          }
+        }
+        history.replaceState = function (state, title, pathname) {
+          const result = oldPushState.apply(history, arguments)
+          if (typeof window.onpushstate === "function") {
+            window.onpushstate(new CustomEvent("pushstate", { detail: { pathname, state } }))
+          }
+        }
+      })(history)
+
+      window.onpushstate = (event) => {
+        console.log(event)
+        root.innerHTML = window.location.pathname
+      }
+
+      window.addEventListener("popstate", (event) => {
+        console.log(event)
+        root.innerHTML = window.location.pathname
+      })
+
+      function pushA() {
+        history.pushState({ name: "A" }, null, "/a")
+      }
+      function pushB() {
+        history.pushState({ name: "B" }, null, "/b")
+      }
+      function replaceState() {
+        history.replaceState({ name: "replaceState" }, null, "/replaceState")
+      }
+      function forward() {
+        history.forward()
+      }
+      function back() {
+        history.back()
+      }
+      function go(step) {
+        history.go(step)
+      }
+    </script>
+  </body>
+</html>
