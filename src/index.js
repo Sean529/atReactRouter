@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "./react-router-dom"
 import { Home, User, Profile } from "./components"
 
 ReactDOM.render(
@@ -13,9 +13,3 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById("root")
 )
-
-// 以下老的方式已废弃
-// Switch => Router
-// component => element
-// component = {home} => element
-// render => element
