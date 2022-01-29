@@ -22,6 +22,9 @@ function BrowserRouter({ children }) {
   return <Router children={children} location={state.location} navigator={history} navigationType={state.action} />
 }
 
+/**
+ * 把路径保存在URL地址的 hash 部分，以便在改变的时候不会发送给服务器
+ */
 function HashRouter({ children }) {
   const historyRef = React.useRef(null)
   if (historyRef.current === null) {
