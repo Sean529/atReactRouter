@@ -90,3 +90,14 @@ function createRoutesFromChildren(children) {
 function Route(props) {}
 
 export { Router, Routes, Route }
+
+export function useNavigate() {
+  const { navigator } = React.useContext(NavigationContext)
+  const navigate = React.useCallback(
+    (to) => {
+      navigator.push(to)
+    },
+    [navigator]
+  )
+  return navigate
+}

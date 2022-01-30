@@ -47,7 +47,6 @@ function createBrowserHistory() {
 
   function notify(newState) {
     // 把 newState 上得属性都拷贝到 history 上
-    console.log("%c AT-[ history ]-51", "font-size:13px; background:#de4307; color:#f6d04d;", history)
     Object.assign(history, newState) // newState {location, action}
     history.length = globalHistory.length
     listeners.forEach((listener) => listener({ location: history.location, action: history.action }))
